@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Pretendard', -apple-system, sans-serif;
+            background: #f9f9f8;
+            color: #37352f;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* === SIDEBAR === */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 220px;
+            height: 100vh;
+            background: #f1f1ef;
+            border-right: 1px solid #e8e7e4;
+            padding: 2rem 1.2rem;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+        }
+
+        .sidebar .logo {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #37352f;
+            margin-bottom: 2.5rem;
+            padding-left: 0.5rem;
+            letter-spacing: -0.3px;
+        }
+
+        .sidebar nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+        }
+
+        .sidebar nav a {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.45rem 0.5rem;
+            font-size: 0.82rem;
+            color: #787774;
+            text-decoration: none;
+            font-weight: 400;
+            transition: all 0.15s;
+        }
+
+        .sidebar nav a .icon {
+            font-size: 0.9rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .sidebar nav a:hover {
+            background: #e8e7e4;
+            color: #37352f;
+        }
+
+        /* === MAIN === */
+        .main {
+            margin-left: 220px;
+            min-height: 100vh;
+        }
+
+        .content {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 3rem 3rem 4rem;
+        }
+
+        /* === COVER === */
+        .cover {
+            background: #f1f1ef;
+            border: 1px solid #e8e7e4;
+            padding: 3rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .cover-inner {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .cover-photo {
+            width: 120px;
+            height: 155px;
+            border: 2px solid #e0e0e0;
+            flex-shrink: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f9f9f8;
+            color: #b4b4b0;
+            font-size: 0.72rem;
+        }
+
+        .cover-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cover-text h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -1.5px;
+            color: #37352f;
+            margin-bottom: 0.3rem;
+        }
+
+        .cover-text .tagline {
+            font-size: 0.9rem;
+            color: #6b6b68;
+            margin-bottom: 1rem;
+        }
+
+        .cover-contacts {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .cover-contacts a {
+            font-size: 0.78rem;
+            color: #37352f;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            text-decoration-color: #c4c3bf;
+            transition: text-decoration-color 0.2s;
+        }
+
+        .cover-contacts a:hover { text-decoration-color: #37352f; }
+
+        /* === SECTION === */
+        .section {
+            margin-bottom: 2.5rem;
+        }
+
+        .section-head {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 1.2rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .section-head .emoji {
+            font-size: 1rem;
+        }
+
+        .section-head h2 {
+            font-size: 0.92rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            color: #37352f;
+        }
+
+        /* === SUB SECTION (팀/개인 구분) === */
+        .sub-head {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #787774;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 0.8rem;
+            margin-top: 1.8rem;
+            padding-left: 0.1rem;
+        }
+
+        .sub-head:first-child {
+            margin-top: 0;
+        }
+
+        /* === TECH === */
+        .callout {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.7rem;
+        }
+
+        .callout-card {
+            background: #fff;
+            border: 1px solid #e8e7e4;
+            padding: 1.2rem 1.3rem;
+            transition: box-shadow 0.2s;
+        }
+
+        .callout-card:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .callout-card h3 {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #37352f;
+            margin-bottom: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .callout-card .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+        }
+
+        .tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: #37352f;
+            background: #f4f4f2;
+            border: 1px solid #e0e0e0;
+            padding: 0.2rem 0.55rem;
+        }
+
+        /* === PROJECTS === */
+        .project-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+        }
+
+        .project-card {
+            background: #fff;
+            border: 1px solid #e8e7e4;
+            border-left: 4px solid #37352f;
+            padding: 1.8rem 2rem;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+            border-color: #d0d0d0;
+        }
+
+        .project-card.featured {
+            border-left: 4px solid #37352f;
+        }
+
+        .project-card .top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.3rem;
+        }
+
+        .project-card h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            color: #37352f;
+        }
+
+        .project-badge {
+            font-size: 0.62rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+            color: #fff;
+            background: #37352f;
+            padding: 0.15rem 0.5rem;
+            white-space: nowrap;
+        }
+
+        .project-card .meta {
+            font-size: 0.72rem;
+            color: #b4b4b0;
+            margin-bottom: 0.6rem;
+        }
+
+        .project-card p {
+            font-size: 0.85rem;
+            color: #6b6b68;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .project-card .bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stack-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+        }
+
+        .stack-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            padding: 0.15rem 0.45rem;
+            background: #f4f4f2;
+            border: 1px solid #e0e0e0;
+            color: #9b9b97;
+        }
+
+        .pj-link {
+            font-size: 0.72rem;
+            color: #37352f;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            text-decoration-color: #c4c3bf;
+            white-space: nowrap;
+            transition: text-decoration-color 0.2s;
+        }
+
+        .pj-link:hover { text-decoration-color: #37352f; }
+
+        /* === PROJECT DETAIL TOGGLE === */
+        .detail-toggle {
+            font-size: 0.72rem;
+            color: #787774;
+            background: none;
+            border: 1px solid #e8e7e4;
+            padding: 0.25rem 0.7rem;
+            cursor: pointer;
+            font-family: 'Pretendard', sans-serif;
+            font-weight: 500;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .detail-toggle:hover {
+            background: #f1f1ef;
+            color: #37352f;
+            border-color: #d0d0d0;
+        }
+
+        .detail-toggle .arrow {
+            display: inline-block;
+            transition: transform 0.3s;
+            margin-left: 0.2rem;
+        }
+
+        .project-card.open .detail-toggle .arrow {
+            transform: rotate(180deg);
+        }
+
+        .project-detail {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, margin 0.3s ease, padding 0.3s ease;
+            border-top: none;
+            margin-top: 0;
+        }
+
+        .project-card.open .project-detail {
+            max-height: 1200px;
+            margin-top: 1.2rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid #e8e7e4;
+        }
+
+        .detail-section {
+            margin-bottom: 1rem;
+        }
+
+        .detail-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .detail-section h4 {
+            font-size: 0.76rem;
+            font-weight: 700;
+            color: #37352f;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.4rem;
+        }
+
+        .detail-section p,
+        .detail-section ul {
+            font-size: 0.82rem;
+            color: #6b6b68;
+            line-height: 1.7;
+        }
+
+        .detail-section ul {
+            padding-left: 1.2rem;
+        }
+
+        .detail-section ul li {
+            margin-bottom: 0.3rem;
+        }
+
+        .detail-section ul li::marker {
+            color: #c4c3bf;
+        }
+
+        /* === TABLE === */
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .info-table tr {
+            border-bottom: 1px solid #f1f1ef;
+        }
+
+        .info-table tr:last-child { border-bottom: none; }
+
+        .info-table td {
+            padding: 0.7rem 0;
+            vertical-align: top;
+            font-size: 0.85rem;
+        }
+
+        .info-table .col-label {
+            width: 130px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: #b4b4b0;
+            padding-top: 0.8rem;
+        }
+
+        .info-table .col-main h4 {
+            font-size: 0.88rem;
+            font-weight: 600;
+            letter-spacing: -0.2px;
+            color: #37352f;
+            margin-bottom: 0.1rem;
+        }
+
+        .info-table .col-main .sub {
+            font-size: 0.78rem;
+            color: #787774;
+        }
+
+        .info-table .col-main .note {
+            font-size: 0.75rem;
+            color: #b4b4b0;
+            margin-top: 0.1rem;
+        }
+
+        .info-table .col-end {
+            text-align: right;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            color: #c4c3bf;
+            white-space: nowrap;
+            padding-top: 0.8rem;
+        }
+
+        /* === FOOTER === */
+        footer {
+            text-align: center;
+            padding: 2.5rem 0;
+            font-size: 0.68rem;
+            color: #c4c3bf;
+            border-top: 1px solid #e8e7e4;
+            margin-top: 1rem;
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 860px) {
+            .sidebar { display: none; }
+            .main { margin-left: 0; }
+        }
+
+        @media (max-width: 600px) {
+            .content { padding: 1.5rem; }
+            .cover { padding: 2rem 1.5rem; }
+
+            .cover-inner {
+                flex-direction: column;
+                text-align: center;
+                gap: 1.2rem;
+            }
+
+            .cover-contacts { justify-content: center; }
+            .cover-text h1 { font-size: 1.6rem; }
+
+            .callout { grid-template-columns: 1fr; }
+
+            .info-table .col-label { display: none; }
+
+            .project-card { padding: 1.3rem 1.5rem; }
+        }
+
+        @media print {
+            .sidebar { display: none; }
+            .main { margin-left: 0; }
+            body { background: #fff; }
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="logo">📄 Portfolio</div>
+        <nav>
+            <a href="#about"><span class="icon">👤</span> About</a>
+            <a href="#education"><span class="icon">🎓</span> Education</a>
+            <a href="#tech"><span class="icon">🛠</span> Tech Stack</a>
+            <a href="#certs"><span class="icon">🏆</span> Certifications</a>
+            <a href="#activities"><span class="icon">💬</span> Activities</a>
+            <a href="#projects"><span class="icon">📁</span> Projects</a>
+        </nav>
+    </aside>
+
+    <div class="main">
+        <div class="content">
+
+            <div class="cover" id="about">
+                <div class="cover-inner">
+                    <div class="cover-photo">
+                        사진
+                    </div>
+                    <div class="cover-text">
+                        <h1>신영섭</h1>
+                        <p class="tagline">AI Agent를 통해 사람들의 업무를 편하게 만드는 것에 관심이 많은 개발자입니다.</p>
+                        <div class="cover-contacts">
+                            <a href="mailto:shinys0720@gmail.com">shinys0720@gmail.com</a>
+                            <a href="https://github.com/whiteys1" target="_blank">github.com/whiteys1</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="section" id="education">
+                <div class="section-head">
+                    <span class="emoji">🎓</span>
+                    <h2>Education</h2>
+                </div>
+                <table class="info-table">
+                    <tr>
+                        <td class="col-label">2021 - 현재</td>
+                        <td class="col-main">
+                            <h4>한국항공대학교</h4>
+                            <div class="sub">소프트웨어학과 · 재학중</div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="section" id="tech">
+                <div class="section-head">
+                    <span class="emoji">🛠</span>
+                    <h2>Tech Stack</h2>
+                </div>
+                <div class="callout" style="grid-template-columns: 1fr 1fr;">
+                    <div class="callout-card">
+                        <h3>AI / LLM</h3>
+                        <div class="tags">
+                            <span class="tag">LangGraph</span>
+                            <span class="tag">RAG</span>
+                        </div>
+                    </div>
+                    <div class="callout-card">
+                        <h3>Backend</h3>
+                        <div class="tags">
+                            <span class="tag">FastAPI</span>
+                            <span class="tag">Spring Boot</span>
+                        </div>
+                    </div>
+                    <div class="callout-card">
+                        <h3>Language</h3>
+                        <div class="tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">Java</span>
+                        </div>
+                    </div>
+                    <div class="callout-card">
+                        <h3>Infra / DB</h3>
+                        <div class="tags">
+                            <span class="tag">AWS</span>
+                            <span class="tag">Docker</span>
+                            <span class="tag">Terraform</span>
+                            <span class="tag">MySQL</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section" id="certs">
+                <div class="section-head">
+                    <span class="emoji">🏆</span>
+                    <h2>Certifications & Awards</h2>
+                </div>
+                <table class="info-table">
+                    <tr>
+                        <td class="col-label">자격증</td>
+                        <td class="col-main">
+                            <h4>SQLD</h4>
+                            <div class="sub">SQL 개발자</div>
+                        </td>
+                        <td class="col-end">2025.12</td>
+                    </tr>
+                    <tr>
+                        <td class="col-label">수상</td>
+                        <td class="col-main">
+                            <h4>SpoonOS 해커톤 우수상</h4>
+                            <div class="sub">깃허브 URL 분석 에이전트</div>
+                        </td>
+                        <td class="col-end">2025.12</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="section" id="activities">
+                <div class="section-head">
+                    <span class="emoji">💬</span>
+                    <h2>Activities</h2>
+                </div>
+                <table class="info-table">
+                    <tr>
+                        <td class="col-label">2024.09 - 2026.02</td>
+                        <td class="col-main">
+                            <h4>대학생 연합 IT 동아리 UMC</h4>
+                            <div class="sub">2024.09 ~ 2025.02 Spring Boot 스터디원<br>2025.02 ~ 2026.02 Spring Boot 파트장 (동아리 임원진)</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-label">2026.01 - 현재</td>
+                        <td class="col-main">
+                            <h4>총학생회 개발팀</h4>
+                            <div class="sub">새내기 배움터, 축제 등 학교행사 사이트 제작</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-label">2024.03 - 2026.02</td>
+                        <td class="col-main">
+                            <h4>알고리즘 소모임 koala</h4>
+                            <div class="sub">백준, 프로그래머스 등 알고리즘 문제 풀이</div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="section" id="projects">
+                <div class="section-head">
+                    <span class="emoji">📁</span>
+                    <h2>Projects</h2>
+                </div>
+
+                <div class="sub-head">팀 프로젝트</div>
+                <div class="project-list">
+
+                    <div class="project-card" onclick="this.classList.toggle('open')">
+                        <div class="top-row">
+                            <h3>논문 검색 에이전트</h3>
+                            <span class="project-badge">수강생 1등</span>
+                        </div>
+                        <div class="meta">2025 · 교내 팀프로젝트 · 생성형 AI 응용</div>
+                        <p>
+                            논문 주제나 제목을 입력하면 관련 논문을 찾아주고 간단한 설명을 해주는 챗봇 에이전트.
+                        </p>
+                        <div class="bottom">
+                            <div class="stack-tags">
+                                <span class="stack-tag">LangGraph</span>
+                                <span class="stack-tag">RAG</span>
+                                <span class="stack-tag">ChromaDB</span>
+                                <span class="stack-tag">Semantic API</span>
+                                <span class="stack-tag">Gradio</span>
+                            </div>
+                            <div style="display:flex;gap:0.6rem;align-items:center;">
+                                <button class="detail-toggle" onclick="event.stopPropagation();this.closest('.project-card').classList.toggle('open')">상세 보기 <span class="arrow">↓</span></button>
+                                <a href="https://github.com/2025-kau-generative-ai-class/transpoter" class="pj-link" onclick="event.stopPropagation()" target="_blank">GitHub ↗</a>
+                            </div>
+                        </div>
+                        <div class="project-detail">
+                            <div class="detail-section">
+                                <h4>담당 역할</h4>
+                                <p>논문 검색 서브그래프 파이프라인 구축, 에이전트 메모리 시스템(단기/장기/Reflection) 아키텍처 설계 및 구현</p>
+                            </div>
+                            <div class="detail-section">
+                                <h4>고민한 점</h4>
+                                <ul>
+                                    <li><strong>노이즈 방지 및 RAG 최적화</strong><br>논문 전체 텍스트를 임베딩할 경우 발생하는 문맥 단절(Chunking) 및 노이즈 문제를 방지하기 위해 데이터 선별 작업을 진행했습니다. 핵심 정보가 압축된 '제목'과 '초록'만을 추출하여 벡터 DB를 구성함으로써 검색 품질을 높이고 모델의 환각 현상을 최소화했습니다.</li>
+                                    <li><strong>비용 절감을 위한 Fallback 라우팅 설계</strong><br>무분별한 외부 검색 API(Google Search) 호출로 인한 과도한 비용 발생을 막기 위해 다단계 검색 전략을 도입했습니다. 로컬 RAG를 최우선으로 탐색하고, 실패 시 Semantic Scholar API, 마지막으로 Google 검색을 수행하도록 우선순위 라우팅을 적용하여 자원 효율성을 극대화했습니다.</li>
+                                    <li><strong>에이전트 맞춤형 장기 메모리 시스템 구축</strong><br>사용자의 지속적인 문맥 유지를 위해 단기 메모리와 별개로 장기 메모리를 ChromaDB에 분리하여 저장했습니다. 데이터를 Profile, Episodic, Knowledge 세 가지 유형으로 구조화하고, 매 턴 종료 시 Reflection 노드가 유의미한 정보를 스스로 판단하여 자동 추출 및 저장하도록 설계했습니다.</li>
+                                </ul>
+                            </div>
+                            <div class="detail-section">
+                                <h4>회고</h4>
+                                <p><strong>평가 지표 부재에 대한 아쉬움:</strong> RAG 시스템의 검색 품질을 결정짓는 리랭킹(Reranking) 임계값을 객관적으로 실험하고 탐색하지 못한 점이 아쉬움으로 남습니다. 이를 통해 LLM 시스템을 실제 프로덕션 수준으로 고도화하기 위해서는 직관이 아닌, 정량적 평가가 가능한 데이터셋(Evaluation Dataset) 구축이 반드시 선행되어야 함을 확인했습니다.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card" onclick="this.classList.toggle('open')">
+                        <div class="top-row">
+                            <h3>깃허브 URL 분석 에이전트</h3>
+                            <span class="project-badge">우수상</span>
+                        </div>
+                        <div class="meta">2025 · SpoonOS 해커톤</div>
+                        <p>
+                            깃허브 리포지토리 URL을 입력하면 파일 구조를 분석하고 보안 취약점 점검 및 README를 자동으로 작성해주는 웹 서비스.
+                        </p>
+                        <div class="bottom">
+                            <div class="stack-tags">
+                                <span class="stack-tag">SpoonOS</span>
+                                <span class="stack-tag">MCP</span>
+                                <span class="stack-tag">GitHub API</span>
+                            </div>
+                            <div style="display:flex;gap:0.6rem;align-items:center;">
+                                <button class="detail-toggle" onclick="event.stopPropagation();this.closest('.project-card').classList.toggle('open')">상세 보기 <span class="arrow">↓</span></button>
+                                <a href="https://github.com/teamKAU" class="pj-link" onclick="event.stopPropagation()" target="_blank">GitHub ↗</a>
+                            </div>
+                        </div>
+                        <div class="project-detail">
+                            <div class="detail-section">
+                                <h4>담당 역할</h4>
+                                <p>메타데이터 수집, 분석, 요약, 보안 검사, 리포트 생성으로 이어지는 에이전트 파이프라인(StateGraph) 설계 및 GitHub MCP 연동 로직 구현</p>
+                            </div>
+                            <div class="detail-section">
+                                <h4>고민한 점</h4>
+                                <ul>
+                                    <li><strong>코드 샘플링 최적화</strong><br>LLM 토큰 한계 극복을 위해 핵심 파일(특정 확장자, 16KB 이하, 테스트 제외)을 최대 5개 선정 후 앞부분만 잘라오는 필터링 로직 구현</li>
+                                    <li><strong>커스텀 그래프 실행기</strong><br>네이티브 StateGraph 환경 부재 시를 대비해, 토폴로지 정렬 기반의 대체 실행기(<code>SimpleStateGraph</code>) 구현 (Fallback 확보)</li>
+                                    <li><strong>보안 취약점 점검</strong><br>하드코딩된 비밀번호/API 키, <code>eval()</code> 등 위험 함수 사용 여부를 탐지하는 정적 보안 체크 노드 파이프라인에 추가</li>
+                                    <li><strong>방어적 디코딩 파이프라인</strong><br>GitHub MCP 연동 시 발생하는 Base64 디코딩 에러 및 예외 상황을 안전하게 처리(try-except)하여 파이프라인 중단 방지</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card" onclick="this.classList.toggle('open')">
+                        <div class="top-row">
+                            <h3>축제 온라인 티케팅 서비스</h3>
+                            <span class="project-badge">실사용 1000+명</span>
+                        </div>
+                        <div class="meta">2024 · 총학생회 협업 · 팀 프로젝트</div>
+                        <p>
+                            오프라인으로 진행되던 학교 축제 입장권 배부를 온라인 티케팅 시스템으로 전환.
+                            약 1,000명의 학생이 실제 사용한 서비스.
+                        </p>
+                        <div class="bottom">
+                            <div class="stack-tags">
+                                <span class="stack-tag">Spring Boot</span>
+                                <span class="stack-tag">FastAPI</span>
+                                <span class="stack-tag">AWS Lambda</span>
+                                <span class="stack-tag">DynamoDB</span>
+                                <span class="stack-tag">SQS</span>
+                                <span class="stack-tag">ECS/ECR</span>
+                                <span class="stack-tag">Terraform</span>
+                            </div>
+                            <div style="display:flex;gap:0.6rem;align-items:center;">
+                                <button class="detail-toggle" onclick="event.stopPropagation();this.closest('.project-card').classList.toggle('open')">상세 보기 <span class="arrow">↓</span></button>
+                            </div>
+                        </div>
+                        <div class="project-detail">
+                            <div class="detail-section">
+                                <h4>담당 역할</h4>
+                                <p>티케팅 파이프라인 구조 설계, 서비스별 백엔드 API 구현, AWS 인프라 구축 및 Terraform 기반 자원 관리</p>
+                            </div>
+                            <div class="detail-section">
+                                <h4>고민한 점</h4>
+                                <ul>
+                                    <li><strong>MSA 기반 프레임워크 및 컨테이너 최적화</strong><br>기능 분리를 위해 주점 조회와 무대 공연 투표 서버는 각각 Spring Boot로 구축하고, 빠른 조회가 필요한 티켓 조회는 FastAPI로 분리하여 AWS ECS 상에서 독립적으로 운영</li>
+                                    <li><strong>서버리스 비동기 파이프라인 및 동시성 제어</strong><br>순간적인 대규모 트래픽 처리를 위해 Lambda 접수 → SQS 큐잉 → 후속 Lambda → DynamoDB 구조를 설계하고, Lambda의 프로비저닝된 동시성(Provisioned Concurrency)을 활성화하여 병목 및 콜드 스타트 방지</li>
+                                    <li><strong>JWT 페이로드 활용을 통한 DB 부하 완화</strong><br>인증 및 인가 과정에서 발생하는 불필요한 데이터베이스 접근을 최소화하기 위해, JWT 토큰의 페이로드에서 유저 정보를 직접 추출하여 RDS 조회 횟수를 대폭 감소</li>
+                                    <li><strong>IaC 기반 인프라 자동화</strong><br>Terraform을 통해 AWS 클라우드 자원을 코드로 관리하여 개발 및 배포 환경의 재현성 확보</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card" onclick="this.classList.toggle('open')">
+                        <div class="top-row">
+                            <h3>EVERYWEAR — AI 가상 피팅 서비스</h3>
+                        </div>
+                        <div class="meta">2025 · 팀 프로젝트</div>
+                        <p>
+                            쇼핑몰 상품 링크만 입력하면 내 전신 사진에 해당 옷을 가상으로 합성해 어울리는지 미리 확인할 수 있는 AI 피팅 플랫폼.
+                        </p>
+                        <div class="bottom">
+                            <div class="stack-tags">
+                                <span class="stack-tag">Spring Boot</span>
+                                <span class="stack-tag">FastAPI</span>
+                                <span class="stack-tag">Selenium</span>
+                                <span class="stack-tag">ECS/ECR</span>
+                            </div>
+                            <div style="display:flex;gap:0.6rem;align-items:center;">
+                                <button class="detail-toggle" onclick="event.stopPropagation();this.closest('.project-card').classList.toggle('open')">상세 보기 <span class="arrow">↓</span></button>
+                                <a href="https://github.com/UMC9th-EVERYWEAR" class="pj-link" onclick="event.stopPropagation()" target="_blank">GitHub ↗</a>
+                            </div>
+                        </div>
+                        <div class="project-detail">
+                            <div class="detail-section">
+                                <h4>담당 역할</h4>
+                                <p>전체 AWS 인프라(ECS) 구축 및 운영, Selenium 기반 비동기 의류 데이터 크롤링 파이프라인 설계 및 구현</p>
+                            </div>
+                            <div class="detail-section">
+                                <h4>고민한 점</h4>
+                                <ul>
+                                    <li><strong>비동기 크롤링 및 폴링(Polling) 아키텍처 도입</strong><br>크롤링 작업의 긴 지연 시간으로 인한 API 병목 현상을 방지하고자, 메인 백엔드는 즉각 응답하고 크롤링 서버가 비동기로 작업을 수행한 뒤 DB에 적재하는 구조를 설계했습니다. 클라이언트는 폴링 방식으로 결과를 확인하도록 구성하여 시스템 응답성을 확보했습니다.</li>
+                                    <li><strong>스레드 종료 플래그(Event Flag)를 활용한 메모리 누수 해결</strong><br>긴 작업에 대해 타임아웃을 적용했을 때, Selenium 웹 드라이버가 종료되지 않고 '좀비 프로세스'로 남아 서버 메모리를 점유하는 문제가 발생했습니다. 이를 해결하기 위해 작업 스레드 내부에 종료 플래그를 도입하여, 타임아웃 시 작업을 중단하고 명시적으로 자원(`driver.quit()`)을 회수하도록 구현했습니다.</li>
+                                    <li><strong>안전한 웹 스크래핑 전략</strong><br>타 쇼핑몰 서버에 무리를 주거나 불법적인 요소로 간주되는 봇 탐지 정책을 피하기 위해, 브라우저 자동화 도구인 Selenium을 활용하여 사람과 유사한 속도와 패턴으로 크롤링하도록 조심스럽게 접근했습니다.</li>
+                                    <li><strong>MSA 기반 서버 분리</strong><br>안정적인 서비스 운영을 위해 메인 비즈니스 로직을 담당하는 Spring Boot와 무거운 크롤링/AI 작업을 처리하는 FastAPI 서버를 분리하여 ECS 환경에 독립적으로 배포 및 관리했습니다.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card" onclick="this.classList.toggle('open')">
+                        <div class="top-row">
+                            <h3>MAITE — AI 기반 회의 분석 및 조율 앱</h3>
+                            <span class="project-badge">팀장</span>
+                        </div>
+                        <div class="meta">2025 · 교내 산학프로젝트</div>
+                        <p>
+                            회의 시간 조율, 실시간 채팅, 녹음 후 AI 텍스트 요약까지 한 곳에서 관리하는 협업 도우미 앱.
+                        </p>
+                        <div class="bottom">
+                            <div class="stack-tags">
+                                <span class="stack-tag">Spring Boot</span>
+                                <span class="stack-tag">WebSocket</span>
+                                <span class="stack-tag">Clova Speech</span>
+                                <span class="stack-tag">OpenAI/Gemini</span>
+                                <span class="stack-tag">OAuth2</span>
+                            </div>
+                            <div style="display:flex;gap:0.6rem;align-items:center;">
+                                <button class="detail-toggle" onclick="event.stopPropagation();this.closest('.project-card').classList.toggle('open')">상세 보기 <span class="arrow">↓</span></button>
+                                <a href="https://github.com/2025KAU-MAITE" class="pj-link" onclick="event.stopPropagation()" target="_blank">GitHub ↗</a>
+                            </div>
+                        </div>
+                        <div class="project-detail">
+                            <div class="detail-section">
+                                <h4>담당 역할</h4>
+                                <p>팀장 및 백엔드 리드 · 전체 시스템 아키텍처 설계, 대용량 오디오 전처리/AI API 연동, WebSocket 기반 실시간 채팅 구현, 외부 결제망 연동</p>
+                            </div>
+                            <div class="detail-section">
+                                <h4>고민한 점</h4>
+                                <ul>
+                                    <li><strong>대용량 음성 데이터 처리 및 API 한계 극복</strong><br>외부 STT(Clova Speech, OpenAI) API의 파일 크기와 요청 시간 제한을 해결하기 위해, <code>AudioChunkerService</code>와 <code>ConvertToWavService</code>를 구현했습니다. 다양한 클라이언트의 음성 포맷을 WAV로 통일하고, 일정 크기로 분할(Chunking)하여 안정적으로 텍스트를 추출하는 파이프라인을 구축했습니다.</li>
+                                    <li><strong>WebSocket 기반 실시간 상태 동기화</strong><br>다수의 사용자가 회의 일정을 조율하고 채팅하는 과정에서 즉각적인 상호작용이 필요하여 STOMP 기반 WebSocket을 도입했습니다. 세션 상태를 실시간으로 관리하고 메시지를 브로드캐스팅하여 매끄러운 협업 환경을 제공했습니다.</li>
+                                    <li><strong>다중 외부 API의 통합적 예외 처리</strong><br>AI 요약, STT 변환, 네이버 지도, 카카오/토스 페이 등 수많은 외부 벤더 API를 하나의 서버에서 연동함에 따라, 각기 다른 포맷의 에러 응답을 일관되게 처리할 수 있도록 글로벌 예외 처리(Exception Advice) 구조를 체계화했습니다.</li>
+                                </ul>
+                            </div>
+                            <div class="detail-section">
+                                <h4>회고</h4>
+                                <p><strong>모놀리식 구조의 한계와 MSA의 필요성 체감:</strong> AI 음성 변환 및 요약과 같이 무겁고 처리 시간이 긴 작업이 일반적인 CRUD(채팅, 결제 등) 로직과 하나의 Spring Boot 서버에 결합(Monolithic Architecture)되어 있었습니다. 이로 인해 트래픽이나 무거운 요청이 몰릴 때 AI 처리의 병목이 전체 서비스의 응답 지연으로 이어질 수 있다는 점을 직면했습니다. 이를 통해 훗날 시스템 설계 시, 역할에 따른 서버 분리(MSA)와 비동기 메시지 큐(Kafka, SQS 등) 도입의 중요성을 깊이 체감하는 계기가 되었습니다.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="sub-head">개인 프로젝트</div>
+                <div class="project-list">
+
+                    <div class="project-card" onclick="this.classList.toggle('open')">
+                        <div class="top-row">
+                            <h3>커밋 → 노션 자동 기록 파이프라인</h3>
+                            <span class="project-badge">Harness</span>
+                        </div>
+                        <div class="meta">2025 · 개인 프로젝트</div>
+                        <p>
+                            코드를 커밋하면 자동으로 노션에 개발 일지가 기록되는 자동화 파이프라인.
+                        </p>
+                        <div class="bottom">
+                            <div class="stack-tags">
+                                <span class="stack-tag">Claude Code</span>
+                                <span class="stack-tag">Hooks</span>
+                                <span class="stack-tag">Notion MCP</span>
+                                <span class="stack-tag">Bash</span>
+                            </div>
+                            <div style="display:flex;gap:0.6rem;align-items:center;">
+                                <button class="detail-toggle" onclick="event.stopPropagation();this.closest('.project-card').classList.toggle('open')">상세 보기 <span class="arrow">↓</span></button>
+                            </div>
+                        </div>
+                        <div class="project-detail">
+                            <div class="detail-section">
+                                <h4>고민한 점</h4>
+                                <ul>
+                                    <li><strong>단일 출처 설계 및 프롬프트 주입</strong><br>Git Hook에서 직접 Notion MCP 호출이 불가능한 구조적 한계를 극복하기 위해, 트리거(Hook)와 규칙(CLAUDE.md)을 분리하고 PostToolUse 훅 발동 시 <code>additionalContext</code>로 노션 기록 지시를 프롬프트에 자동 주입하는 우회 방식 적용</li>
+                                    <li><strong>개발 워크플로우 방해 최소화</strong><br><code>git commit</code> 명령에만 매칭되도록 설계하여 개발자의 정상적인 작업 흐름을 방해하지 않고 일지 작성을 자동화</li>
+                                </ul>
+                            </div>
+                            <div class="detail-section">
+                                <h4>동작 흐름</h4>
+                                <p>사용자 요청 → Claude 코드 수정 및 git commit → PostToolUse 훅 발동 → additionalContext로 노션 기록 지시 주입 → Claude가 Notion MCP 호출하여 개발 일지 자동 생성</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card" onclick="this.classList.toggle('open')">
+                        <div class="top-row">
+                            <h3>로컬 LLM 서빙 & 하네스 구축</h3>
+                        </div>
+                        <div class="meta">2025 · 개인 프로젝트</div>
+                        <p>
+                            로컬 환경에서 LLM을 서빙하고, AI의 행동을 규칙으로 통제하는 하네스를 구축한 프로젝트.
+                        </p>
+                        <div class="bottom">
+                            <div class="stack-tags">
+                                <span class="stack-tag">Ollama</span>
+                                <span class="stack-tag">Qwen 8B</span>
+                                <span class="stack-tag">ReAct</span>
+                                <span class="stack-tag">Harness</span>
+                            </div>
+                            <div style="display:flex;gap:0.6rem;align-items:center;">
+                                <button class="detail-toggle" onclick="event.stopPropagation();this.closest('.project-card').classList.toggle('open')">상세 보기 <span class="arrow">↓</span></button>
+                                <a href="https://github.com/whiteys1/LocalQwen8B" class="pj-link" onclick="event.stopPropagation()" target="_blank">GitHub ↗</a>
+                            </div>
+                        </div>
+                        <div class="project-detail">
+                            <div class="detail-section">
+                                <h4>담당 역할</h4>
+                                <p>Qwen 8B 로컬 서빙 환경 구축, ReAct 패턴 기반 에이전트 설계, 시스템 프롬프트(AGENTS.md) 및 센서(문법 검사)를 포함한 통제용 하네스 파이프라인 구현</p>
+                            </div>
+                            <div class="detail-section">
+                                <h4>고민한 점</h4>
+                                <ul>
+                                    <li><strong>단일 출처 기반의 LLM 제어력 확보</strong><br>에이전트가 임의로 행동하거나 환각을 일으키는 것을 방지하기 위해 <code>AGENTS.md</code> 파일을 시스템 프롬프트의 최우선 규칙으로 주입했습니다. AI의 역할과 제약 사항을 하나의 마크다운 파일로 집중 관리하여 프롬프트의 유지보수성과 통제력을 높였습니다.</li>
+                                    <li><strong>자율 실행의 안정성 보장 (센서 로직)</strong><br>AI가 코드를 자율적으로 작성하고 파일 시스템을 수정할 때 발생할 수 있는 치명적인 오류를 막기 위해, 파일 변경을 감지하는 센서(Sensor) 파이프라인을 구축했습니다. 코드가 수정될 때마다 자동으로 문법 검사를 수행하도록 하여 실행 환경의 안전성을 확보했습니다.</li>
+                                    <li><strong>로컬 환경에서의 ReAct 패턴 구현</strong><br>외부 클라우드 API 의존 없이 보안이 유지되는 로컬 환경(Ollama) 내에서, AI가 스스로 생각(Thought)하고 도구(Action)를 사용해 결과를 관찰(Observation)할 수 있도록 ReAct 형태의 프롬프팅 및 실행 루프 구조를 직접 설계하고 구현했습니다.</li>
+                                </ul>
+                            </div>
+                            <div class="detail-section">
+                                <h4>동작 흐름</h4>
+                                <p>사용자 요청 → ReAct 에이전트 상황 분석 및 도구 선택 → 시스템 프롬프트(AGENTS.md) 규칙 검증 → 파일 수정 등 도구 실행 → 센서(Sensor) 동작 및 문법 오류 검사 → 피드백 루프 후 최종 응답 도출</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <footer>
+                <p>© 2026</p>
+            </footer>
+
+        </div>
+    </div>
+
+</body>
+</html>

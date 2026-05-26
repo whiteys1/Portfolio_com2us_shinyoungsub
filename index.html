@@ -725,10 +725,10 @@
                             <div class="detail-section">
                                 <h4>고민한 점</h4>
                                 <ul>
-                                    <li><strong>코드 샘플링 최적화</strong><br>LLM 토큰 한계 극복을 위해 핵심 파일(특정 확장자, 16KB 이하, 테스트 제외)을 최대 5개 선정 후 앞부분만 잘라오는 필터링 로직 구현</li>
-                                    <li><strong>커스텀 그래프 실행기</strong><br>네이티브 StateGraph 환경 부재 시를 대비해, 토폴로지 정렬 기반의 대체 실행기(<code>SimpleStateGraph</code>) 구현 (Fallback 확보)</li>
-                                    <li><strong>보안 취약점 점검</strong><br>하드코딩된 비밀번호/API 키, <code>eval()</code> 등 위험 함수 사용 여부를 탐지하는 정적 보안 체크 노드 파이프라인에 추가</li>
-                                    <li><strong>방어적 디코딩 파이프라인</strong><br>GitHub MCP 연동 시 발생하는 Base64 디코딩 에러 및 예외 상황을 안전하게 처리(try-except)하여 파이프라인 중단 방지</li>
+                                    <li><strong>코드 샘플링 최적화</strong><br>LLM 토큰 한계를 극복하기 위해 핵심 파일(특정 확장자, 16KB 이하, 테스트 제외)을 최대 5개 선정한 뒤 앞부분만 잘라오는 필터링 로직을 구현했습니다.</li>
+                                    <li><strong>커스텀 그래프 실행기</strong><br>네이티브 StateGraph 환경이 부재할 경우를 대비하여, 토폴로지 정렬 기반의 대체 실행기(<code>SimpleStateGraph</code>)를 구현하여 Fallback을 확보했습니다.</li>
+                                    <li><strong>보안 취약점 점검</strong><br>하드코딩된 비밀번호/API 키, <code>eval()</code> 등 위험 함수 사용 여부를 탐지하는 정적 보안 체크 노드를 파이프라인에 추가했습니다.</li>
+                                    <li><strong>방어적 디코딩 파이프라인</strong><br>GitHub MCP 연동 시 발생하는 Base64 디코딩 에러 및 예외 상황을 안전하게 처리(try-except)하여 파이프라인 중단을 방지했습니다.</li>
                                 </ul>
                             </div>
                         </div>
@@ -766,10 +766,10 @@
                             <div class="detail-section">
                                 <h4>고민한 점</h4>
                                 <ul>
-                                    <li><strong>MSA 기반 프레임워크 및 컨테이너 최적화</strong><br>기능 분리를 위해 주점 조회와 무대 공연 투표 서버는 각각 Spring Boot로 구축하고, 빠른 조회가 필요한 티켓 조회는 FastAPI로 분리하여 AWS ECS 상에서 독립적으로 운영</li>
-                                    <li><strong>서버리스 비동기 파이프라인 및 동시성 제어</strong><br>순간적인 대규모 트래픽 처리를 위해 Lambda 접수 → SQS 큐잉 → 후속 Lambda → DynamoDB 구조를 설계하고, Lambda의 프로비저닝된 동시성(Provisioned Concurrency)을 활성화하여 병목 및 콜드 스타트 방지</li>
-                                    <li><strong>JWT 페이로드 활용을 통한 DB 부하 완화</strong><br>인증 및 인가 과정에서 발생하는 불필요한 데이터베이스 접근을 최소화하기 위해, JWT 토큰의 페이로드에서 유저 정보를 직접 추출하여 RDS 조회 횟수를 대폭 감소</li>
-                                    <li><strong>IaC 기반 인프라 자동화</strong><br>Terraform을 통해 AWS 클라우드 자원을 코드로 관리하여 개발 및 배포 환경의 재현성 확보</li>
+                                    <li><strong>MSA 기반 프레임워크 및 컨테이너 최적화</strong><br>기능 분리를 위해 주점 조회와 무대 공연 투표 서버는 각각 Spring Boot로 구축하고, 빠른 조회가 필요한 티켓 조회는 FastAPI로 분리하여 AWS ECS 상에서 독립적으로 운영했습니다.</li>
+                                    <li><strong>서버리스 비동기 파이프라인 및 동시성 제어</strong><br>순간적인 대규모 트래픽 처리를 위해 Lambda 접수 → SQS 큐잉 → 후속 Lambda → DynamoDB 구조를 설계하고, Lambda의 프로비저닝된 동시성(Provisioned Concurrency)을 활성화하여 병목 및 콜드 스타트를 방지했습니다.</li>
+                                    <li><strong>JWT 페이로드 활용을 통한 DB 부하 완화</strong><br>인증 및 인가 과정에서 발생하는 불필요한 데이터베이스 접근을 최소화하기 위해, JWT 토큰의 페이로드에서 유저 정보를 직접 추출하여 RDS 조회 횟수를 대폭 감소시켰습니다.</li>
+                                    <li><strong>IaC 기반 인프라 자동화</strong><br>Terraform을 통해 AWS 클라우드 자원을 코드로 관리하여 개발 및 배포 환경의 재현성을 확보했습니다.</li>
                                 </ul>
                             </div>
                         </div>
@@ -883,13 +883,13 @@
                             <div class="detail-section">
                                 <h4>고민한 점</h4>
                                 <ul>
-                                    <li><strong>단일 출처 설계 및 프롬프트 주입</strong><br>Git Hook에서 직접 Notion MCP 호출이 불가능한 구조적 한계를 극복하기 위해, 트리거(Hook)와 규칙(CLAUDE.md)을 분리하고 PostToolUse 훅 발동 시 <code>additionalContext</code>로 노션 기록 지시를 프롬프트에 자동 주입하는 우회 방식 적용</li>
-                                    <li><strong>개발 워크플로우 방해 최소화</strong><br><code>git commit</code> 명령에만 매칭되도록 설계하여 개발자의 정상적인 작업 흐름을 방해하지 않고 일지 작성을 자동화</li>
+                                    <li><strong>단일 출처 설계 및 프롬프트 주입</strong><br>Git Hook에서 직접 Notion MCP 호출이 불가능한 구조적 한계를 극복하기 위해, 트리거(Hook)와 규칙(CLAUDE.md)을 분리하고 PostToolUse 훅 발동 시 <code>additionalContext</code>로 노션 기록 지시를 프롬프트에 자동 주입하는 우회 방식을 적용했습니다.</li>
+                                    <li><strong>개발 워크플로우 방해 최소화</strong><br><code>git commit</code> 명령에만 매칭되도록 설계하여 개발자의 정상적인 작업 흐름을 방해하지 않으면서 일지 작성을 자동화했습니다.</li>
                                 </ul>
                             </div>
                             <div class="detail-section">
                                 <h4>동작 흐름</h4>
-                                <p>사용자 요청 → Claude 코드 수정 및 git commit → PostToolUse 훅 발동 → additionalContext로 노션 기록 지시 주입 → Claude가 Notion MCP 호출하여 개발 일지 자동 생성</p>
+                                <p>사용자 요청 → Claude 코드 수정 및 git commit → PostToolUse 훅 발동 → additionalContext로 노션 기록 지시 주입 → Claude가 Notion MCP를 호출하여 개발 일지를 자동 생성합니다.</p>
                             </div>
                         </div>
                     </div>
@@ -929,7 +929,7 @@
                             </div>
                             <div class="detail-section">
                                 <h4>동작 흐름</h4>
-                                <p>사용자 요청 → ReAct 에이전트 상황 분석 및 도구 선택 → 시스템 프롬프트(AGENTS.md) 규칙 검증 → 파일 수정 등 도구 실행 → 센서(Sensor) 동작 및 문법 오류 검사 → 피드백 루프 후 최종 응답 도출</p>
+                                <p>사용자 요청 → ReAct 에이전트가 상황을 분석하고 도구를 선택 → 시스템 프롬프트(AGENTS.md) 규칙 검증 → 파일 수정 등 도구 실행 → 센서(Sensor)가 동작하여 문법 오류를 검사 → 피드백 루프를 거쳐 최종 응답을 도출합니다.</p>
                             </div>
                         </div>
                     </div>
